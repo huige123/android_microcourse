@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.example.googlebottomfragment.MainActivity" >
+
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RadioGroup
+        android:id="@+id/tab_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/my_course"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="10dp"
+            android:background="@drawable/tab_selector_bg"
+            android:textColor="@android:color/white"
+            android:text="我的微课"
+            android:textSize="15sp"/>   
+        <RadioButton
+            android:id="@+id/online_resource"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="10dp"
+            android:background="@drawable/tab_selector_bg"
+            android:textColor="@android:color/white"
+            android:text="在线资源"
+            android:textSize="15sp"/>
+        <RadioButton
+            android:id="@+id/oneself"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="10dp"
+            android:background="@drawable/tab_selector_bg"
+            android:textColor="@android:color/white"
+            android:text="个人中心"
+            android:textSize="15sp"/>
+            
+    </RadioGroup>
+    
+      
+
+</LinearLayout>

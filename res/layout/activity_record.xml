@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    <LinearLayout
+        android:id="@+id/left"
+    	android:layout_width="60dp"
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical"
+    	android:layout_alignParentLeft="true">
+    	<ImageButton 
+    	    android:id="@+id/pen"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/pen_selector"/>
+    	<ImageButton 
+    	    android:id="@+id/eraser"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/eraser_selector"/>
+    	<ImageButton 
+    	    android:id="@+id/hand"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/hand_selector"/>
+		
+	</LinearLayout>
+	<LinearLayout
+	    android:id="@+id/right"
+    	android:layout_width="60dp"
+    	android:layout_height="fill_parent"
+    	android:orientation="vertical"
+    	android:layout_alignParentRight="true">
+    	<ImageButton 
+    	    android:id="@+id/camera"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/camera_selector"/>
+    	<ImageButton 
+    	    android:id="@+id/picture"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/picture_selector"/>
+
+	</LinearLayout>
+	<com.gwp.view.DrawView
+	    android:id="@+id/draw_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@android:color/white"
+	    android:layout_toRightOf="@id/left"
+	    android:layout_toLeftOf="@id/right"/>
+	
+</RelativeLayout>
