@@ -6,6 +6,7 @@ import java.util.Random;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class BitmapHelper {
 	List<MyPicture> list;

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gwp.util.BitmapHelper;
+import com.gwp.util.Constants;
 import com.gwp.util.Constants.Mode;
+
+
 
 
 
@@ -25,6 +28,7 @@ import android.graphics.Xfermode;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -43,6 +47,7 @@ public class DrawView extends View {
 	Xfermode xfermode;
 	int []colors = new int[]{Color.RED,Color.BLUE,Color.BLACK};
 	int cur = 0;
+	boolean first = true;
 	Handler mhandler = new Handler(){
 
 		@Override
@@ -86,9 +91,12 @@ public class DrawView extends View {
 	protected void onLayout(boolean changed, int left, int top, int right,
 			int bottom) {
 		// TODO Auto-generated method stub
-		cacheBitmap = Bitmap.createBitmap(right - left, bottom - top, Config.ARGB_8888);
-		cacheCanvas = new Canvas(); 
-		cacheCanvas.setBitmap(cacheBitmap);
+		if(first){
+			first = false;
+			cacheBitmap = Bitmap.createBitmap(right - left, bottom - top, Config.ARGB_8888);
+			cacheCanvas = new Canvas(); 
+			cacheCanvas.setBitmap(cacheBitmap);
+		}
 		super.onLayout(changed, left, top, right, bottom);
 	}
 	@Override
@@ -164,14 +172,6 @@ public class DrawView extends View {
 		bitmapHelper.addBitmap(bitmap);
 		invalidate();
 	}
-/*	public void initView() {
-		WIDTH=getWidth();HEIGHT=getHeight();
-		cacheBitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Config.ARGB_8888);
-		cacheCanvas = new Canvas(); 
-		cacheCanvas.setBitmap(cacheBitmap);
-		cacheCanvas.drawColor(Color.argb(0, 255, 255, 255));
-		cacheCanvas.drawText(""+getWidth()+" "+getHeight(), 0, 0, linePaint);
-	}*/
-	
+
 	
 }

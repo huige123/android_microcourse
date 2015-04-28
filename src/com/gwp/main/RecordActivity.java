@@ -1,8 +1,12 @@
 package com.gwp.main;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -11,27 +15,30 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.gwp.course.R;
 import com.gwp.util.Constants.Mode;
 import com.gwp.util.Constants;
+import com.gwp.util.Utils;
 import com.gwp.view.DrawView;
 
 public class RecordActivity extends Activity implements OnClickListener{
 	DrawView drawview;
 	ImageButton pen, eraser, camera, picture, hand;
-	final private String filePath = Environment.getDataDirectory().getAbsolutePath() + File.pathSeparator + "temp.jpg";
-	final private Uri uri = Uri.fromFile(new File(filePath));
+	private File file;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,  
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置成全屏模式  
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,  
+				~0);//设置成全屏模式  
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//横屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);  //去标题
 		setContentView(R.layout.activity_record);
@@ -47,39 +54,41 @@ public class RecordActivity extends Activity implements OnClickListener{
 		picture.setOnClickListener(this);
 		hand.setOnClickListener(this);
 		
+		
 	}
 	@Override
 	public void onClick(View view) {
-		int id = view.getId();
-		if(id == R.id.eraser){
+		switch(view.getId()){
+		case R.id.eraser:
 			if(drawview.getMode() != Mode.ERASER)drawview.changeMode(Mode.ERASER);
-			
-		}else if(id ==R.id.pen){
+			break;
+		case R.id.pen:
 			if(drawview.getMode() == Mode.PEN) drawview.changeColor();
 			else drawview.changeMode(Mode.PEN);
-		
-		}else if(id == R.id.camera){
+			break;
+		case R.id.camera:
 			callCamera();
-		
-		}else if(id == R.id.picture){
+			break;
+		case R.id.picture:
 			callPicture();
-	
-		}else if(id == R.id.hand){
+			break;
+		case R.id.hand:
 			drawview.changeMode(Mode.HAND);
+			break;
 		}
 	}
 	
 	private void callPicture() {
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  
+	//	Intent intent = new Intent(Intent.ACTION_GET_CONTENT); 
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);  
-        intent.setType("image/*");  
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, Constants.PICTURE_CODE);
-		
 	}
 	private void callCamera(){		 
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//调用android自带的照相机 
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+	//	intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);  
+	//	intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		startActivityForResult(intent, Constants.CAMERA_CODE); 
 	}
 	@Override
@@ -88,11 +97,17 @@ public class RecordActivity extends Activity implements OnClickListener{
 		switch(requestCode){
 		case Constants.CAMERA_CODE:
 			if(resultCode == Activity.RESULT_OK){
-				drawview.addBitmap(BitmapFactory.decodeFile(filePath));
+				Toast.makeText(this, data.getExtras().toString(), 1).show();
+				//drawview.addBitmap((Bitmap)data.getExtras().get("data"));
 			}
 		case Constants.PICTURE_CODE:
 			if(resultCode == Activity.RESULT_OK){
-				drawview.addBitmap(BitmapFactory.decodeFile(filePath));
+				try {
+					ContentResolver cr = getContentResolver();
+					drawview.addBitmap(Utils.bitmapFromStream(this,cr.openInputStream(data.getData()), drawview.getWidth(), drawview.getHeight()));
+				} catch (Exception e) {
+					Log.d(Constants.LOG, e.getMessage().toString());
+				}
 			}
 		}
 	}

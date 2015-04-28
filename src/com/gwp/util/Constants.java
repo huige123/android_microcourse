@@ -6,6 +6,7 @@ public class Constants {
 		static public final int ERASER = 1;
 		static public final int HAND = 2;
 	}
+	static public String LOG = "microcourse";
 	static public final int CAMERA_CODE = 0;
 	static public final int PICTURE_CODE = 1;
 }

@@ -6,7 +6,7 @@ public class MyPicture {
 	public Bitmap bitmap;
 	public MyPicture(float x, float y, Bitmap bitmap){
 		this.x = x; this.y = y; 
-		this.bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*6, bitmap.getHeight()*6, true);
+		this.bitmap = bitmap;
 	}
 	public MyPicture(Bitmap bitmap){
 		this(100, 100, bitmap);
