@@ -44,7 +44,7 @@
     	    android:background="@drawable/picture_selector"/>
 
 	</LinearLayout>
-	<com.gwp.view.DrawView
+	<com.dieyidezui.view.DrawView
 	    android:id="@+id/draw_view"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
