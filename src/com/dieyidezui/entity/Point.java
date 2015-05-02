@@ -8,7 +8,7 @@ public class Point {
 	public Point(){
 		this(0f, 0f);
 	}
-	Vector minus(Point from){
+	public Vector minus(Point from){
 		return new Vector(x - from.x, y - from.y);
 	}
 	public void add(Vector v) {

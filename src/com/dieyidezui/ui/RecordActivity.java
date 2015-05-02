@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -14,6 +16,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -34,6 +38,8 @@ public class RecordActivity extends Activity implements OnClickListener{
 	DrawView drawview;
 	ImageButton pen, eraser, camera, picture, hand;
 	private File file;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,11 +50,11 @@ public class RecordActivity extends Activity implements OnClickListener{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);  //去标题
 		setContentView(R.layout.activity_record);
 		drawview = (DrawView)findViewById(R.id.draw_view);
-		pen = (ImageButton)findViewById(R.id.pen);
-		eraser = (ImageButton)findViewById(R.id.eraser);
-		camera = (ImageButton)findViewById(R.id.camera);
-		picture = (ImageButton)findViewById(R.id.picture);
-		hand = (ImageButton)findViewById(R.id.hand);
+		pen = (ImageButton)findViewById(R.id.record_pen);
+		eraser = (ImageButton)findViewById(R.id.record_eraser);
+		camera = (ImageButton)findViewById(R.id.record_camera);
+		picture = (ImageButton)findViewById(R.id.record_picture);
+		hand = (ImageButton)findViewById(R.id.record_hand);
 		pen.setOnClickListener(this);
 		eraser.setOnClickListener(this);
 		camera.setOnClickListener(this);
@@ -60,21 +66,20 @@ public class RecordActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
-		case R.id.eraser:
-			if(drawview.getMode() != Mode.ERASER)drawview.changeMode(Mode.ERASER);
+		case R.id.record_eraser:
+			drawview.setMode(Mode.ERASER);
 			break;
-		case R.id.pen:
-			if(drawview.getMode() == Mode.PEN) drawview.changeColor();
-			else drawview.changeMode(Mode.PEN);
+		case R.id.record_pen:
+			drawview.setMode(Mode.PEN);
 			break;
-		case R.id.camera:
+		case R.id.record_camera:
 			callCamera();
 			break;
-		case R.id.picture:
+		case R.id.record_picture:
 			callPicture();
-			break;
-		case R.id.hand:
-			drawview.changeMode(Mode.HAND);
+			break;1
+		case R.id.record_hand:
+			drawview.setMode(Mode.HAND);
 			break;
 		}
 	}
@@ -98,35 +103,18 @@ public class RecordActivity extends Activity implements OnClickListener{
 		switch(requestCode){
 		case Constants.CAMERA_CODE:
 			if(resultCode == Activity.RESULT_OK){
-				Toast.makeText(this, data.getExtras().toString(), 1).show();
 				//drawview.addBitmap((Bitmap)data.getExtras().get("data"));
 			}
 		case Constants.PICTURE_CODE:
 			if(resultCode == Activity.RESULT_OK){
 				try {
 					ContentResolver cr = getContentResolver();
-					drawview.addBitmap(Utils.bitmapFromStream(this,cr.openInputStream(data.getData()), drawview.getWidth(), drawview.getHeight()));
+					drawview.addBitmap(Utils.bitmapFromStream(this,
+							cr.openInputStream(data.getData()), drawview.getWidth(), drawview.getHeight()));
 				} catch (Exception e) {
 					Log.d(Constants.LOG, e.getMessage().toString());
 				}
 			}
 		}
 	}
-	
-/*	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		new Thread(){
-			public void run(){
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				drawview.initView();
-			}
-		}.start();
-	}*/
 }

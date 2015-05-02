@@ -2,6 +2,8 @@ package com.dieyidezui.view;
 
 import com.dieyidezui.util.BitmapHelper;
 import com.dieyidezui.util.Constants.Mode;
+import com.dieyidezui.util.DrawableHelper;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,22 +22,15 @@ import android.view.View;
 
 public class DrawView extends View {
 	
-	Bitmap cacheBitmap;
-	Canvas cacheCanvas;
-	Context context;
-	BitmapHelper bitmapHelper;
-	int mode;
 
+	Context context;
+
+	DrawableHelper drawableHelper;
 	boolean first = true;
 
 	public DrawView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-
-
-		bitmapHelper = new BitmapHelper();
-
-
 	}
 	
 	
@@ -46,61 +41,39 @@ public class DrawView extends View {
 		// TODO Auto-generated method stub
 		if(first){
 			first = false;
-			
+			drawableHelper = new DrawableHelper(right-left, bottom-top);
+			drawableHelper.setMode(Mode.HAND);
 		}
 		super.onLayout(changed, left, top, right, bottom);
 	}
 	@Override
 	protected void onDraw(Canvas canvas) {
-		bitmapHelper.onDraw(canvas);
-		canvas.drawBitmap(cacheBitmap, 0, 0, null);//
-//		Toast.makeText(getContext(), t1 + " " + t2 + " " + t3 + " " + t4, 0).show();
+		drawableHelper.onDraw(canvas);
 	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-
-		invalidate();
+		if(drawableHelper.onTouchEvent(event))
+			invalidate();
 		return true;
 	}
-	private void touchEventDraw(MotionEvent event) {
 
-		invalidate();
-	}
-	
-	private void touchEventDragScala(MotionEvent event) {
-		switch(event.getAction()){
-		case MotionEvent.ACTION_DOWN:
-			bitmapHelper.touchDown(event.getX(), event.getY());
-			break;
-		case MotionEvent.ACTION_MOVE:
-			bitmapHelper.touchMove(event.getX(), event.getY());
-			break;
-		case MotionEvent.ACTION_UP:
-			bitmapHelper.touchUp();
-			break;
-		}
-		invalidate();
-	}
+
 	public void clearBoard(){
-		cacheCanvas.drawColor(Color.TRANSPARENT);
+		drawableHelper.clearCurPage();
 	}
-	public int getMode(){
-		return mode;
+	public void setMode(int mode){
+		drawableHelper.setMode(mode);
 	}
-	public void changeColor(){
-
-	}
-	public void changeMode(int mode){
-		this.mode = mode;
-		if(mode == Mode.ERASER){
-		}else if(mode == Mode.PEN){
-		}
-	}
+	
 	public void addBitmap(Bitmap bitmap) {	
-		bitmapHelper.addBitmap(bitmap);
+		drawableHelper.addBitmap(bitmap);
 		invalidate();
 	}
-
-	
+	public void nextPage(){
+		drawableHelper.nextPage();
+	}
+	public void prePage(){
+		drawableHelper.prePage();
+	}
 }

@@ -10,17 +10,32 @@
     	android:orientation="vertical"
     	android:layout_alignParentLeft="true">
     	<ImageButton 
-    	    android:id="@+id/pen"
+    	    android:id="@+id/record_pen"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
     	    android:background="@drawable/pen_selector"/>
     	<ImageButton 
-    	    android:id="@+id/eraser"
+    	    android:id="@+id/record_eraser"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
     	    android:background="@drawable/eraser_selector"/>
     	<ImageButton 
-    	    android:id="@+id/hand"
+    	    android:id="@+id/record_hand"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/hand_selector"/>
+    	<ImageButton 
+    	    android:id="@+id/record_pre"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/hand_selector"/>
+    	<TextView 
+    	    android:id="@+id/record_show_page"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="60dp"
+    	    android:background="@drawable/hand_selector"/>
+    	<ImageButton 
+    	    android:id="@+id/record_next"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
     	    android:background="@drawable/hand_selector"/>
@@ -33,12 +48,12 @@
     	android:orientation="vertical"
     	android:layout_alignParentRight="true">
     	<ImageButton 
-    	    android:id="@+id/camera"
+    	    android:id="@+id/record_camera"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
     	    android:background="@drawable/camera_selector"/>
     	<ImageButton 
-    	    android:id="@+id/picture"
+    	    android:id="@+id/record_picture"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
     	    android:background="@drawable/picture_selector"/>

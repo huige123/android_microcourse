@@ -21,4 +21,5 @@ public class Constants {
 	static public final int ALPAL = 240;
 	static public final int PEN_STROKE_WIDTH = 5;
 	static public final int ERASER_STROKE_WIDTH = 60;
+	
 }
