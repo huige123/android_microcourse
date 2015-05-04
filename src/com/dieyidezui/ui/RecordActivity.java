@@ -77,7 +77,7 @@ public class RecordActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.record_picture:
 			callPicture();
-			break;1
+			break;
 		case R.id.record_hand:
 			drawview.setMode(Mode.HAND);
 			break;

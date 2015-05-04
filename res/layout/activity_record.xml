@@ -33,7 +33,7 @@
     	    android:id="@+id/record_show_page"
     	    android:layout_width="fill_parent"
     	    android:layout_height="60dp"
-    	    android:background="@drawable/hand_selector"/>
+    	    />
     	<ImageButton 
     	    android:id="@+id/record_next"
     	    android:layout_width="fill_parent"

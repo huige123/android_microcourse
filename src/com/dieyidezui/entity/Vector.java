@@ -8,4 +8,8 @@ public class Vector {
 	public Vector(){
 		this(0f, 0f);
 	}
+	void add(Vector other){
+		x += other.x;
+		y += other.y;
+	}
 }

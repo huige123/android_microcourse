@@ -22,7 +22,6 @@ import android.view.View;
 
 public class DrawView extends View {
 	
-
 	Context context;
 
 	DrawableHelper drawableHelper;
@@ -32,13 +31,10 @@ public class DrawView extends View {
 		super(context, attrs);
 		this.context = context;
 	}
-	
-	
 
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right,
-			int bottom) {
-		// TODO Auto-generated method stub
+			int bottom){
 		if(first){
 			first = false;
 			drawableHelper = new DrawableHelper(right-left, bottom-top);
@@ -57,7 +53,6 @@ public class DrawView extends View {
 			invalidate();
 		return true;
 	}
-
 
 	public void clearBoard(){
 		drawableHelper.clearCurPage();

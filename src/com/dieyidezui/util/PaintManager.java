@@ -1,16 +1,13 @@
 package com.dieyidezui.util;
 
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.dieyidezui.entity.Point;
 import com.dieyidezui.util.Constants;
-import com.dieyidezui.util.Constants.Mode;
 
 public class PaintManager {
 	private Point prePoint;
@@ -32,30 +29,26 @@ public class PaintManager {
 	public boolean onTouchEvent(MotionEvent event){
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN:
-			onDown(new Point(event.getX(), event.getY()));
-			break;
+			return onDown(event);
 		case MotionEvent.ACTION_MOVE:
-			onMove(new Point(event.getX(), event.getY()));
-			break;
+			return onMove(event);
 		case MotionEvent.ACTION_UP:
-			onUp();
-			break;
-		default:
-			return false;
+			return onUp(event);
 		}
+		return false;
+	}
+	public boolean onDown(MotionEvent event) {
+		prePoint = new Point(event.getX(), event.getY());
+		return false;
+	}
+	public boolean onMove(MotionEvent event) {
+		Point curPoint = new Point(event.getX(), event.getY());
+		cacheCanvas.drawLine(prePoint.x, prePoint.y, curPoint.x, curPoint.y, drawPaint);
+		prePoint = curPoint;
 		return true;
 	}
-	public void onDown(Point point) {
-		Log.d(Constants.LOG, "down");
-		prePoint = point;
-	}
-	public void onMove(Point point) {
-		Log.d(Constants.LOG, "move");
-		cacheCanvas.drawLine(prePoint.x, prePoint.y, point.x, point.y, drawPaint);
-		prePoint = point;
-	}
-	public void onUp() {
-		Log.d(Constants.LOG, "up");
+	public boolean onUp(MotionEvent event) {
+		return false;
 	}
 	public void clear() {
 		cacheCanvas.drawColor(Color.TRANSPARENT);

@@ -42,13 +42,13 @@ public class DrawableHelper {
 		paintManager.onDraw(canvas);
 	}
 	public void nextPage(){
-		Log.d(Constants.LOG, bitmapHelpers.size() + " " + curPage+1);
+	//	Log.d(Constants.LOG, bitmapHelpers.size() + " " + curPage+1);
 		if(++curPage == bitmapHelpers.size()){
-			Log.d(Constants.LOG, bitmapHelpers.size() + " " + curPage);
+		//	Log.d(Constants.LOG, bitmapHelpers.size() + " " + curPage);
 			bitmapHelpers.add(new BitmapHelper());
 			cacheBitmaps.add(Bitmap.createBitmap(width, height, Config.ARGB_4444));
 		}
-		Log.d(Constants.LOG, cacheBitmaps.get(curPage).toString());
+	//	Log.d(Constants.LOG, cacheBitmaps.get(curPage).toString());
 		paintManager.setBitmap(cacheBitmaps.get(curPage));
 	}
 	public void prePage(){
